@@ -1,11 +1,10 @@
 {
   "expo": {
-    "name": "detector-master",
+    "name": "Detector",
     "slug": "detector-master",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,6 +23,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.abelptvts.detector",
+      "versionCode": 1
     }
   }
 }

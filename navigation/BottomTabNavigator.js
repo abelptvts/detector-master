@@ -1,48 +1,62 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import * as React from 'react';
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import * as React from "react";
 
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import TabBarIcon from "../components/TabBarIcon";
+import HomeScreen from "../screens/HomeScreen";
+import LinksScreen from "../screens/LinksScreen";
+import { getToken } from "../actions/accessToken";
+import { getHostname } from "../actions/util";
+import CamerasScreenContainer from "../containers/CamerasScreenContainer";
+import DetectionsScreenContainer from "../containers/DetectionsScreenContainer";
 
-const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Home';
+
+const Tab = createMaterialTopTabNavigator();
+const INITIAL_ROUTE_NAME = "Home";
 
 export default function BottomTabNavigator({ navigation, route }) {
-  // Set the header title on the parent stack navigator depending on the
-  // currently active tab. Learn more in the documentation:
-  // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+    navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+    React.useEffect(() => {
+        getHostname().then(hostname => {
+            if(!hostname) {
+                navigation.replace("Configure");
+                return;
+            }
 
-  return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
-      <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          title: 'Get Started',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
-        options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
-        }}
-      />
-    </BottomTab.Navigator>
-  );
+            getToken().then(token => {
+                if(!token) {
+                    navigation.replace("Register");
+                }
+            })
+        })
+    }, [])
+
+    return (
+        <Tab.Navigator initialRouteName={INITIAL_ROUTE_NAME} lazy swipeEnabled tabBarPosition="bottom">
+            <Tab.Screen
+                name="Cameras"
+                component={CamerasScreenContainer}
+                options={{
+                    title: "Cameras",
+                }}
+            />
+            <Tab.Screen
+                name="Detections"
+                component={DetectionsScreenContainer}
+                options={{
+                    title: "Detections",
+                }}
+            />
+        </Tab.Navigator>
+    );
 }
 
 function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+    const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
-  switch (routeName) {
-    case 'Home':
-      return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
-  }
+    switch (routeName) {
+        case "Cameras":
+            return "Your Cameras";
+        case "Detections":
+            return "Your Detections";
+    }
 }

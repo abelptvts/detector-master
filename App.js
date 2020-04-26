@@ -3,15 +3,21 @@ import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { SplashScreen } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 
-import BottomTabNavigator from "./navigation/BottomTabNavigator";
+import { Provider as ReduxProvider } from "react-redux";
+import { Provider as ThemeProvider } from "react-native-paper";
 import useLinking from "./navigation/useLinking";
+import store from "./reducers/store";
+import AppNavigator from "./navigation/AppNavigator";
+import { theme } from "./styles/theme";
 
-const Stack = createStackNavigator();
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+});
 
-export default function App(props) {
+export default function App({ skipLoadingScreen }) {
     const [isLoadingComplete, setLoadingComplete] = React.useState(false);
     const [initialNavigationState, setInitialNavigationState] = React.useState();
     const containerRef = React.useRef();
@@ -29,7 +35,6 @@ export default function App(props) {
                 // Load fonts
                 await Font.loadAsync({
                     ...Ionicons.font,
-                    "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
                 });
             } catch (e) {
                 // We might want to provide this error information to an error reporting service
@@ -43,24 +48,20 @@ export default function App(props) {
         loadResourcesAndDataAsync();
     }, []);
 
-    if (!isLoadingComplete && !props.skipLoadingScreen) {
+    if (!isLoadingComplete && !skipLoadingScreen) {
         return null;
     }
     return (
-        <View style={styles.container}>
-            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-            <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-                <Stack.Navigator>
-                    <Stack.Screen name="Root" component={BottomTabNavigator} />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </View>
+        <ReduxProvider store={store}>
+            <ThemeProvider theme={theme}>
+                <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
+                    {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+                    <AppNavigator
+                        containerRef={containerRef}
+                        initialState={initialNavigationState}
+                    />
+                </View>
+            </ThemeProvider>
+        </ReduxProvider>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-    },
-});

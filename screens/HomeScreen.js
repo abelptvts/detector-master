@@ -3,8 +3,6 @@ import * as React from "react";
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { MonoText } from "../components/StyledText";
-
 export default function HomeScreen() {
     return (
         <View style={styles.container}>
@@ -25,9 +23,7 @@ export default function HomeScreen() {
 
                     <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
 
-                    <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-                        <MonoText>screens/HomeScreen.js</MonoText>
-                    </View>
+                    <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]} />
 
                     <Text style={styles.getStartedText}>
                         Change any of the text, save the file, and your app will automatically
@@ -48,9 +44,7 @@ export default function HomeScreen() {
                 <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
 
                 <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-                    <MonoText style={styles.codeHighlightText}>
-                        navigation/BottomTabNavigator.js
-                    </MonoText>
+
                 </View>
             </View>
         </View>
