@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { setHostname } from "../actions/util";
+import { getHostname, setHostname } from "../actions/util";
 import ConfigScreen from "../screens/ConfigScreen";
 
 const mapStateToProps = () => ({});
@@ -7,7 +7,10 @@ const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch, { navigation }) => ({
     async saveHostname(hostname) {
         await dispatch(setHostname(hostname));
-        navigation.replace("Root");
+        navigation.replace("Your Cameras");
+    },
+    async getHostname() {
+        return getHostname();
     },
 });
 

@@ -55,7 +55,7 @@ export default function App({ skipLoadingScreen }) {
         <ReduxProvider store={store}>
             <ThemeProvider theme={theme}>
                 <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
-                    {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+                    <StatusBar barStyle="light-content" />
                     <AppNavigator
                         containerRef={containerRef}
                         initialState={initialNavigationState}

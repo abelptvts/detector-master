@@ -4,8 +4,17 @@ import { Button, Card, Paragraph, TextInput, Title, withTheme } from "react-nati
 import commonStyles from "../styles/common";
 import typo from "../styles/typo";
 
-function ConfigScreen({ theme, saveHostname }) {
+function ConfigScreen({ theme, saveHostname, getHostname }) {
     const [hostname, setHostname] = useState("");
+
+    React.useEffect(() => {
+        getHostname().then((hn) => {
+            if (hn === null) {
+                return;
+            }
+            setHostname(hn);
+        });
+    }, []);
 
     return (
         <KeyboardAvoidingView

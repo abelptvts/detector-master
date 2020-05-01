@@ -6,27 +6,18 @@ import { withTheme } from "react-native-paper";
 import ConfigScreenContainer from "../containers/ConfigScreenContainer";
 import BottomTabNavigator from "./BottomTabNavigator";
 import RegisterScreenContainer from "../containers/RegisterScreenContainer";
+import AddCameraScreenContainer from "../containers/AddCameraScreenContainer";
 
 const Stack = createStackNavigator();
 
 function AppNavigator({ containerRef, initialState, theme }) {
     return (
-        <NavigationContainer
-            ref={containerRef}
-            initialState={initialState}
-            theme={
-                Platform.OS === "ios"
-                    ? {
-                          ...DarkTheme,
-                          colors: { ...DarkTheme.colors, primary: "white" },
-                      }
-                    : { colors: { background: theme.colors.primary } }
-            }
-        >
+        <NavigationContainer ref={containerRef} initialState={initialState} theme={theme}>
             <Stack.Navigator>
-                <Stack.Screen name="Root" component={BottomTabNavigator} />
+                <Stack.Screen name="Your Cameras" component={BottomTabNavigator} />
                 <Stack.Screen name="Configure" component={ConfigScreenContainer} />
                 <Stack.Screen name="Register" component={RegisterScreenContainer} />
+                <Stack.Screen name="Add Camera" component={AddCameraScreenContainer} />
             </Stack.Navigator>
         </NavigationContainer>
     );

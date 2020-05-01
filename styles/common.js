@@ -14,4 +14,5 @@ export default StyleSheet.create({
         alignSelf: "stretch",
         marginBottom: 6,
     },
+    fab: { position: "absolute", margin: 16, right: 0, bottom: 0 },
 });

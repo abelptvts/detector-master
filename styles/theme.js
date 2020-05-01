@@ -5,7 +5,7 @@ export const theme = {
     dark: true,
     colors: {
         ...DarkTheme.colors,
-        primary: "#ffd54f",
-        accent: "#ffd54f",
+        primary: "#ffc107",
+        accent: "#ffc107",
     },
 };

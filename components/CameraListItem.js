@@ -6,13 +6,13 @@ import typo from "../styles/typo";
 
 export default function CamerasListItem({ camera, onSwitchChange }) {
     return (
-        <Card>
+        <Card style={{ marginTop: 10, marginBottom: 10 }}>
             <Card.Content>
                 <View style={cameraListItem.container}>
                     <View style={cameraListItem.nameContainer}>
                         <View
                             style={{
-                                backgroundColor: camera.get("connected") ? "green" : "red",
+                                backgroundColor: camera.get("connected") ? "#00c853" : "#dd2c00",
                                 ...cameraListItem.indicator,
                             }}
                         />

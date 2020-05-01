@@ -1,3 +1,4 @@
+import { Share } from "react-native";
 import { SET_CAMERAS, SET_CAMERAS_LOADING } from "./types";
 import { getHostname } from "./util";
 import { getToken } from "./accessToken";
@@ -29,6 +30,31 @@ export function getCameras(offset = 0, limit = 10) {
         } catch (e) {
             console.log(e);
             dispatch(setLoading(false));
+        }
+    };
+}
+
+export function registerCamera(name, description) {
+    return async () => {
+        try {
+            const hostname = await getHostname();
+            const responseJson = await fetch(`${hostname}/api/cameras`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: await getToken(),
+                },
+                body: JSON.stringify({ name, description }),
+            });
+            const response = await responseJson.json();
+            await Share.share(
+                { message: response.token, title: `Camera ${name} - Access Token` },
+                {
+                    dialogTitle: "Send the access token to yourself!",
+                }
+            );
+        } catch (e) {
+            console.log(e);
         }
     };
 }

@@ -1,33 +1,10 @@
 import * as React from "react";
-import { Card, Paragraph, Title, withTheme } from "react-native-paper";
-import { TouchableOpacity, View, VirtualizedList, Image, Modal } from "react-native";
-import moment from "moment";
+import { Paragraph, withTheme } from "react-native-paper";
+import { View, VirtualizedList, Modal } from "react-native";
 import ImageViewer from "react-native-image-zoom-viewer";
 import common from "../styles/common";
-import cameraListItem from "../styles/cameraListItem";
-import typo from "../styles/typo";
 import { getHostname } from "../actions/util";
-
-function DetectionListItem({ detection, hostname, onClick }) {
-    return (
-        <TouchableOpacity onPress={() => onClick(detection)}>
-            <Card style={{ marginTop: 10, marginBottom: 10 }}>
-                <Card.Content>
-                    <View style={cameraListItem.nameContainer}>
-                        <Image
-                            style={{ width: 66, height: 66, marginRight: 12, borderRadius: 6 }}
-                            source={{ uri: `${hostname}${detection.get("capture")}` }}
-                        />
-                        <View>
-                            <Title style={typo.header1}>Camera name</Title>
-                            <Paragraph>{moment(detection.get("date")).fromNow()}</Paragraph>
-                        </View>
-                    </View>
-                </Card.Content>
-            </Card>
-        </TouchableOpacity>
-    );
-}
+import DetectionListItem from "../components/DetectionListItem";
 
 function DetectionsScreen({ theme, loading, detections, getDetections }) {
     const [hostname, setHostname] = React.useState("");
