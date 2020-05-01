@@ -27,7 +27,7 @@ function SettingsSheet({ navigation }) {
     );
 }
 
-function CamerasScreen({ theme, loading, cameras, getCameras, navigation }) {
+function CamerasScreen({ theme, loading, cameras, getCameras, toggleCamera, navigation }) {
     const bottomSheetRef = React.useRef(null);
     const [page, setPage] = React.useState(0);
 
@@ -53,7 +53,11 @@ function CamerasScreen({ theme, loading, cameras, getCameras, navigation }) {
                 }
                 ListEmptyComponent={() => <Paragraph>You have no connected cameras yet</Paragraph>}
                 renderItem={({ item }) => (
-                    <CamerasListItem key={item.get("id")} camera={item} onSwitchChange={() => {}} />
+                    <CamerasListItem
+                        key={item.get("id")}
+                        camera={item}
+                        onSwitchChange={() => toggleCamera(item.get("id"), !item.get("enabled"))}
+                    />
                 )}
                 onEndReached={() => setPage((prev) => prev + 1)}
             />

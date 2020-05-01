@@ -1,5 +1,5 @@
 import { Share, Alert } from "react-native";
-import { PUSH_CAMERAS, SET_CAMERAS, SET_CAMERAS_LOADING } from "./types";
+import { PUSH_CAMERAS, SET_CAMERAS, SET_CAMERAS_LOADING, UPDATE_CAMERA } from "./types";
 import { getHostname } from "./util";
 import { getToken } from "./accessToken";
 
@@ -13,6 +13,10 @@ export function pushCameras(cameras) {
 
 export function setLoading(loading) {
     return { type: SET_CAMERAS_LOADING, loading };
+}
+
+export function updateCamera(id, enabled) {
+    return { type: UPDATE_CAMERA, id, enabled };
 }
 
 export function getCameras(offset = 0, limit = 10) {
@@ -63,6 +67,30 @@ export function registerCamera(name, description) {
                 }
             );
         } catch (e) {
+            console.log(e);
+        }
+    };
+}
+
+export function toggleCamera(id, enabled) {
+    return async (dispatch) => {
+        try {
+            dispatch(updateCamera(id, enabled));
+            const hostname = await getHostname();
+            const responseJson = await fetch(`${hostname}/api/cameras/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: await getToken(),
+                },
+                body: JSON.stringify({ enabled }),
+            });
+            const response = await responseJson.json();
+            if (!response.id) {
+                Alert.alert("Error!", "Could not toggle camera.");
+            }
+        } catch (e) {
+            Alert.alert("Error!", "Could not connect to API.");
             console.log(e);
         }
     };
