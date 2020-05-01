@@ -8,12 +8,12 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/detector.png",
     "scheme": "myapp",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffc107"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
