@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { getDetections } from "../actions/detections";
+import { getDetections, shareDetection } from "../actions/detections";
 import DetectionsScreen from "../screens/DetectionsScreen";
 
 const mapStateToProps = (state) => ({
@@ -10,6 +10,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     getDetections(offset = 0, limit = 10) {
         dispatch(getDetections(offset, limit));
+    },
+    shareDetection(detection) {
+        dispatch(shareDetection(detection));
     },
 });
 

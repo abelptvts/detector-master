@@ -6,7 +6,7 @@ import common from "../styles/common";
 import { getHostname } from "../actions/util";
 import DetectionListItem from "../components/DetectionListItem";
 
-function DetectionsScreen({ theme, loading, detections, getDetections }) {
+function DetectionsScreen({ theme, loading, detections, getDetections, shareDetection }) {
     const [hostname, setHostname] = React.useState("");
     const [modalOpen, setModalOpen] = React.useState(false);
     const [images, setImages] = React.useState([]);
@@ -63,6 +63,7 @@ function DetectionsScreen({ theme, loading, detections, getDetections }) {
                         detection={item}
                         hostname={hostname}
                         onClick={onDetectionClick}
+                        onShareClick={shareDetection}
                     />
                 )}
             />

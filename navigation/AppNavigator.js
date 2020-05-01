@@ -1,7 +1,6 @@
 import React from "react";
-import { Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { DarkTheme, NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { withTheme } from "react-native-paper";
 import ConfigScreenContainer from "../containers/ConfigScreenContainer";
 import BottomTabNavigator from "./BottomTabNavigator";

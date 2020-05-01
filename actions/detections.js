@@ -1,3 +1,4 @@
+import { Share } from "react-native";
 import { SET_DETECTIONS, SET_DETECTIONS_LOADING } from "./types";
 import { getHostname } from "./util";
 import { getToken } from "./accessToken";
@@ -30,5 +31,20 @@ export function getDetections(offset = 0, limit = 10) {
             console.log(e);
             dispatch(setLoading(false));
         }
+    };
+}
+
+export function shareDetection(detection) {
+    return async () => {
+        const hostname = await getHostname();
+        await Share.share(
+            {
+                url: `${hostname}${detection.get("capture")}`,
+                message: `${hostname}${detection.get("capture")}`,
+            },
+            {
+                dialogTitle: "Share the capture",
+            }
+        );
     };
 }
