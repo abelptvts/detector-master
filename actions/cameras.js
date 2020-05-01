@@ -1,10 +1,14 @@
-import { Share } from "react-native";
-import { SET_CAMERAS, SET_CAMERAS_LOADING } from "./types";
+import { Share, Alert } from "react-native";
+import { PUSH_CAMERAS, SET_CAMERAS, SET_CAMERAS_LOADING } from "./types";
 import { getHostname } from "./util";
 import { getToken } from "./accessToken";
 
 export function setCameras(cameras) {
     return { type: SET_CAMERAS, cameras };
+}
+
+export function pushCameras(cameras) {
+    return { type: PUSH_CAMERAS, cameras };
 }
 
 export function setLoading(loading) {
@@ -25,10 +29,15 @@ export function getCameras(offset = 0, limit = 10) {
                 }
             );
             const response = await responseJson.json();
-            dispatch(setCameras(response));
+            if (offset === 0) {
+                dispatch(setCameras(response));
+            } else {
+                dispatch(pushCameras(response));
+            }
             dispatch(setLoading(false));
         } catch (e) {
             console.log(e);
+            Alert.alert("Error!", "Could not connect to API.");
             dispatch(setLoading(false));
         }
     };

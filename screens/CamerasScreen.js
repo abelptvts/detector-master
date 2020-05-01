@@ -9,7 +9,7 @@ import typo from "../styles/typo";
 
 function SettingsSheet({ navigation }) {
     return (
-        <View style={[settingsSheet.panel]}>
+        <View style={[settingsSheet.panel, { zIndex: 1000 }]}>
             <View style={settingsSheet.panelHeader}>
                 <View style={settingsSheet.panelHandle} />
                 <Title style={typo.header1}>Settings</Title>
@@ -29,16 +29,18 @@ function SettingsSheet({ navigation }) {
 
 function CamerasScreen({ theme, loading, cameras, getCameras, navigation }) {
     const bottomSheetRef = React.useRef(null);
+    const [page, setPage] = React.useState(0);
+
     React.useEffect(() => {
-        getCameras();
-    }, []);
+        getCameras(page * 10, 10);
+    }, [page]);
 
     return (
         <View style={{ flex: 1, backgroundColor: theme.colors.surface }}>
             <VirtualizedList
                 refreshing={loading}
                 onRefresh={() => getCameras()}
-                data={cameras.toList()}
+                data={cameras}
                 getItem={(items, index) => items.get(index)}
                 getItemCount={(items) => items.size}
                 keyExtractor={(item) => `${item.get("id")}`}
@@ -53,14 +55,15 @@ function CamerasScreen({ theme, loading, cameras, getCameras, navigation }) {
                 renderItem={({ item }) => (
                     <CamerasListItem key={item.get("id")} camera={item} onSwitchChange={() => {}} />
                 )}
+                onEndReached={() => setPage((prev) => prev + 1)}
             />
-            <FAB style={common.fab} icon="plus" onPress={() => navigation.push("Add Camera")} />
             <BottomSheet
                 ref={bottomSheetRef}
                 snapPoints={[200, 40]}
                 renderContent={() => SettingsSheet({ navigation })}
                 initialSnap={1}
             />
+            <FAB style={common.fab} icon="plus" onPress={() => navigation.push("Add Camera")} />
         </View>
     );
 }

@@ -1,10 +1,14 @@
 import { Share } from "react-native";
-import { SET_DETECTIONS, SET_DETECTIONS_LOADING } from "./types";
+import { PUSH_DETECTIONS, SET_DETECTIONS, SET_DETECTIONS_LOADING } from "./types";
 import { getHostname } from "./util";
 import { getToken } from "./accessToken";
 
 export function setDetections(detections) {
     return { type: SET_DETECTIONS, detections };
+}
+
+export function pushDetections(detections) {
+    return { type: PUSH_DETECTIONS, detections };
 }
 
 export function setLoading(loading) {
@@ -25,7 +29,11 @@ export function getDetections(offset = 0, limit = 10) {
                 }
             );
             const response = await responseJson.json();
-            dispatch(setDetections(response));
+            if (offset !== 0) {
+                dispatch(pushDetections(response));
+            } else {
+                dispatch(setDetections(response));
+            }
             dispatch(setLoading(false));
         } catch (e) {
             console.log(e);

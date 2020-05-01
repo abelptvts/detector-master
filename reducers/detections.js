@@ -1,8 +1,8 @@
 import { fromJS } from "immutable";
-import { SET_DETECTIONS, SET_DETECTIONS_LOADING } from "../actions/types";
+import { PUSH_DETECTIONS, SET_DETECTIONS, SET_DETECTIONS_LOADING } from "../actions/types";
 
 const initialState = fromJS({
-    detections: {},
+    detections: [],
     loading: false,
 });
 
@@ -15,9 +15,9 @@ const detections = (state = initialState, action) => {
         return state.set("loading", action.loading);
     }
 
-    // if (action.type === DELETE_DETECTION) {
-    //     return state.set("detections", state.get("detections").delete(action.id));
-    // }
+    if (action.type === PUSH_DETECTIONS) {
+        return state.set("detections", state.get("detections").concat(fromJS(action.detections)));
+    }
 
     return state;
 };

@@ -2,11 +2,11 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 
-const logger = createLogger();
-
 import cameras from "./cameras";
 import masters from "./masters";
 import detections from "./detections";
+
+const logger = createLogger();
 
 const reducers = combineReducers({ cameras, masters, detections });
 

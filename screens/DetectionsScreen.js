@@ -10,12 +10,16 @@ function DetectionsScreen({ theme, loading, detections, getDetections, shareDete
     const [hostname, setHostname] = React.useState("");
     const [modalOpen, setModalOpen] = React.useState(false);
     const [images, setImages] = React.useState([]);
+    const [page, setPage] = React.useState(0);
 
     React.useEffect(() => {
-        getDetections();
         // we should have the hostname cached by now
         getHostname().then((h) => setHostname(h));
     }, []);
+
+    React.useEffect(() => {
+        getDetections(page * 10, 10);
+    }, [page]);
 
     const onDetectionClick = React.useCallback(
         (detection) => {
@@ -66,6 +70,7 @@ function DetectionsScreen({ theme, loading, detections, getDetections, shareDete
                         onShareClick={shareDetection}
                     />
                 )}
+                onEndReached={() => setPage((prev) => prev + 1)}
             />
         </View>
     );
