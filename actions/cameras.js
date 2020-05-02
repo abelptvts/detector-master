@@ -41,7 +41,6 @@ export function getCameras(offset = 0, limit = 10) {
             dispatch(setLoading(false));
         } catch (e) {
             console.log(e);
-            Alert.alert("Error!", "Could not connect to API.");
             dispatch(setLoading(false));
         }
     };

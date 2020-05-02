@@ -27,6 +27,18 @@
     "android": {
       "package": "com.abelptvts.detector",
       "versionCode": 1
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "abel-putovits",
+            "project": "detector-master",
+            "authToken": "4e4a9ec8d00f485f8789b946f8a0b07ccb6c3683e2b640e0981398adea419c54"
+          }
+        }
+      ]
     }
   }
 }

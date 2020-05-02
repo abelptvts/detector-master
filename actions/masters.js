@@ -1,5 +1,6 @@
 import { Notifications } from "expo";
 import Constants from "expo-constants";
+import { Alert } from "react-native";
 import { getHostname } from "./util";
 import { setToken } from "./accessToken";
 
@@ -19,6 +20,7 @@ export function register(name) {
             const response = await responseJson.json();
             await setToken(response.token);
         } catch (e) {
+            Alert.alert("Error!", `Could not register! ${e.message}`);
             console.log(e);
         }
     };

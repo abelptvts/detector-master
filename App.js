@@ -1,15 +1,24 @@
 import * as React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import { SplashScreen } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
+import Constants from "expo-constants";
 
 import { Provider as ReduxProvider } from "react-redux";
 import { Provider as ThemeProvider } from "react-native-paper";
+import * as Sentry from "sentry-expo";
 import useLinking from "./navigation/useLinking";
 import store from "./reducers/store";
 import AppNavigator from "./navigation/AppNavigator";
 import { theme } from "./styles/theme";
+
+Sentry.init({
+    dsn: "https://e5b379be19c54b53867dcddbace72344@o386532.ingest.sentry.io/5220950",
+    enableInExpoDevelopment: true,
+    debug: true,
+});
+Sentry.setRelease(Constants.manifest.revisionId);
 
 const styles = StyleSheet.create({
     container: {

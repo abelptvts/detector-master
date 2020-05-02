@@ -7,7 +7,7 @@ const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch, { navigation }) => ({
     async register(name) {
         await dispatch(register(name));
-        navigation.replace("Root");
+        navigation.replace("Your Cameras");
     },
 });
 
