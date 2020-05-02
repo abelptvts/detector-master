@@ -1,5 +1,11 @@
 import { Share, Alert } from "react-native";
-import { PUSH_CAMERAS, SET_CAMERAS, SET_CAMERAS_LOADING, UPDATE_CAMERA } from "./types";
+import {
+    PUSH_CAMERAS,
+    REMOVE_CAMERA,
+    SET_CAMERAS,
+    SET_CAMERAS_LOADING,
+    UPDATE_CAMERA,
+} from "./types";
 import { getHostname } from "./util";
 import { getToken } from "./accessToken";
 
@@ -17,6 +23,10 @@ export function setLoading(loading) {
 
 export function updateCamera(id, enabled) {
     return { type: UPDATE_CAMERA, id, enabled };
+}
+
+export function removeCamera(id) {
+    return { type: REMOVE_CAMERA, id };
 }
 
 export function getCameras(offset = 0, limit = 10) {
@@ -87,6 +97,29 @@ export function toggleCamera(id, enabled) {
             const response = await responseJson.json();
             if (!response.id) {
                 Alert.alert("Error!", "Could not toggle camera.");
+            }
+        } catch (e) {
+            Alert.alert("Error!", "Could not connect to API.");
+            console.log(e);
+        }
+    };
+}
+
+export function deleteCamera(id) {
+    return async (dispatch) => {
+        try {
+            dispatch(removeCamera(id));
+            const hostname = await getHostname();
+            const responseJson = await fetch(`${hostname}/api/cameras/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: await getToken(),
+                },
+            });
+            const response = await responseJson.json();
+            if (!response.name) {
+                Alert.alert("Error!", "Could not delete camera.");
             }
         } catch (e) {
             Alert.alert("Error!", "Could not connect to API.");

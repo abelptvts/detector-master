@@ -1,5 +1,11 @@
 import { fromJS } from "immutable";
-import { PUSH_CAMERAS, SET_CAMERAS, SET_CAMERAS_LOADING, UPDATE_CAMERA } from "../actions/types";
+import {
+    PUSH_CAMERAS,
+    REMOVE_CAMERA,
+    SET_CAMERAS,
+    SET_CAMERAS_LOADING,
+    UPDATE_CAMERA,
+} from "../actions/types";
 
 const initialState = fromJS({
     cameras: [],
@@ -27,6 +33,13 @@ const cameras = (state = initialState, action) => {
         return state.setIn(
             ["cameras", idx],
             state.getIn(["cameras", idx]).set("enabled", action.enabled)
+        );
+    }
+
+    if (action.type === REMOVE_CAMERA) {
+        return state.set(
+            "cameras",
+            state.get("cameras").filter((c) => c.get("id") !== action.id)
         );
     }
 

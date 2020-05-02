@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { getCameras, toggleCamera } from "../actions/cameras";
+import { deleteCamera, getCameras, toggleCamera } from "../actions/cameras";
 import CamerasScreen from "../screens/CamerasScreen";
 
 const mapStateToProps = (state) => ({
@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     toggleCamera(id, enabled) {
         dispatch(toggleCamera(id, enabled));
+    },
+    deleteCamera(id) {
+        dispatch(deleteCamera(id));
     },
 });
 

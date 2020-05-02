@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, FAB, Paragraph, Title, withTheme } from "react-native-paper";
-import { View, VirtualizedList } from "react-native";
+import { View, VirtualizedList, Alert } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 import common from "../styles/common";
 import CamerasListItem from "../components/CameraListItem";
@@ -27,13 +27,41 @@ function SettingsSheet({ navigation }) {
     );
 }
 
-function CamerasScreen({ theme, loading, cameras, getCameras, toggleCamera, navigation }) {
+function CamerasScreen({
+    theme,
+    loading,
+    cameras,
+    getCameras,
+    toggleCamera,
+    deleteCamera,
+    navigation,
+}) {
     const bottomSheetRef = React.useRef(null);
     const [page, setPage] = React.useState(0);
 
     React.useEffect(() => {
         getCameras(page * 10, 10);
     }, [page]);
+
+    const confirmDeleteCamera = React.useCallback((camera) => {
+        Alert.alert(
+            `Are you sure you want to delete ${camera.get("name")}?`,
+            "Once deleted the detections will be lost too.",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Delete",
+                    style: "destructive",
+                    onPress() {
+                        deleteCamera(camera.get("id"));
+                    },
+                },
+            ]
+        );
+    }, []);
 
     return (
         <View style={{ flex: 1, backgroundColor: theme.colors.surface }}>
@@ -56,6 +84,7 @@ function CamerasScreen({ theme, loading, cameras, getCameras, toggleCamera, navi
                     <CamerasListItem
                         key={item.get("id")}
                         camera={item}
+                        onLongPress={confirmDeleteCamera}
                         onSwitchChange={() => toggleCamera(item.get("id"), !item.get("enabled"))}
                     />
                 )}

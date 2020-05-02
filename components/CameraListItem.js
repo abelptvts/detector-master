@@ -4,9 +4,9 @@ import * as React from "react";
 import cameraListItem from "../styles/cameraListItem";
 import typo from "../styles/typo";
 
-export default function CamerasListItem({ camera, onSwitchChange }) {
+export default function CamerasListItem({ camera, onSwitchChange, onLongPress }) {
     return (
-        <Card style={{ marginTop: 10, marginBottom: 10 }}>
+        <Card style={{ marginTop: 10, marginBottom: 10 }} onLongPress={() => onLongPress(camera)}>
             <Card.Content>
                 <View style={cameraListItem.container}>
                     <View style={cameraListItem.nameContainer}>
