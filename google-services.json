@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "927825751807",
+    "firebase_url": "https://detector-master.firebaseio.com",
+    "project_id": "detector-master",
+    "storage_bucket": "detector-master.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927825751807:android:5874d95ca8630f34be66ca",
+        "android_client_info": {
+          "package_name": "com.abelptvts.detector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927825751807-okpgibg1s17i27uos16sl4ojcm5iur06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu3Xi9FPvLjbALRJXAp4Ng-xVWNmOxMjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "927825751807-okpgibg1s17i27uos16sl4ojcm5iur06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
