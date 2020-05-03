@@ -1,1 +1,0 @@
-SENTRY_ORG=abel-putovits SENTRY_PROJECT=detector-master SENTRY_AUTH_TOKEN=4e4a9ec8d00f485f8789b946f8a0b07ccb6c3683e2b640e0981398adea419c54 expo build:android
